@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatización de procesos industriales y de servicios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite: #12161A;
+    --panel: #1B2126;
+    --panel-line: #2B3A42;
+    --steel: #5CA3B8;
+    --amber: #E8A33D;
+    --paper: #EDEFF1;
+    --muted: #8B98A0;
+    --radius-card: 2px;
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--graphite);
+    color:var(--paper);
+    font-family:"IBM Plex Sans", sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:"Space Grotesk", sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero{
+    position:relative;
+    min-height:86vh;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    border-bottom:1px solid var(--panel-line);
+    background-color:var(--graphite);
+    background-image:
+      linear-gradient(var(--panel-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center;
+    opacity:1;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: radial-gradient(ellipse 70% 55% at 30% 20%, rgba(92,163,184,0.16), transparent 60%),
+                linear-gradient(180deg, rgba(18,22,26,0.15) 0%, rgba(18,22,26,0.85) 78%, var(--graphite) 100%);
+    pointer-events:none;
+  }
+
+  .hero-inner{
+    position:relative;
+    width:100%;
+    padding:120px 0 64px;
+    opacity:0;
+    transform:translateY(14px);
+    animation: rise 0.7s cubic-bezier(.2,.8,.2,1) 0.15s forwards;
+  }
+
+  @keyframes rise{
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-inner{animation:none; opacity:1; transform:none;}
+  }
+
+  .hero-tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:var(--steel);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+
+  .hero-tag .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 0 3px rgba(232,163,61,0.18);
+  }
+
+  .hero h1{
+    font-size:clamp(34px, 5vw, 62px);
+    font-weight:600;
+    max-width:14ch;
+    color:var(--paper);
+  }
+
+  .hero p{
+    margin-top:22px;
+    max-width:52ch;
+    font-size:17px;
+    color:var(--muted);
+  }
+
+  .hero-meta{
+    margin-top:44px;
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+    border-top:1px solid var(--panel-line);
+    padding-top:22px;
+  }
+
+  .hero-meta div{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .hero-meta strong{
+    display:block;
+    font-family:"Space Grotesk", sans-serif;
+    font-size:20px;
+    color:var(--paper);
+    font-weight:600;
+    margin-top:4px;
+  }
+
+  /* ---------- CATALOG ---------- */
+
+  .catalog{
+    padding:88px 0 120px;
+  }
+
+  .catalog-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:24px;
+    margin-bottom:48px;
+    border-bottom:1px solid var(--panel-line);
+    padding-bottom:24px;
+  }
+
+  .catalog-head h2{
+    font-size:28px;
+    font-weight:600;
+  }
+
+  .catalog-head span{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--panel-line);
+    border:1px solid var(--panel-line);
+  }
+
+  @media (max-width:940px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr;}
+    .wrap{padding:0 22px;}
+  }
+
+  .card{
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+
+  .card-figure{
+    aspect-ratio:4/3;
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      linear-gradient(180deg, rgba(92,163,184,0.06), transparent 60%);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .card-figure svg{
+    width:62%;
+    height:62%;
+    stroke:var(--steel);
+    fill:none;
+    stroke-width:1.4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .card-figure .accent{
+    stroke:var(--amber);
+  }
+
+  .card-code{
+    position:absolute;
+    top:14px;
+    left:16px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+  }
+
+  .card-body{
+    padding:26px 26px 24px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .card-body h3{
+    font-size:19px;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+
+  .card-body p{
+    font-size:14.5px;
+    color:var(--muted);
+    flex:1;
+    margin-bottom:22px;
+  }
+
+  .card-btn{
+    align-self:flex-start;
+    background:none;
+    border:1px solid var(--panel-line);
+    color:var(--paper);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    padding:10px 18px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:border-color .18s ease, background .18s ease;
+  }
+
+  .card-btn svg{
+    width:14px; height:14px;
+    stroke:var(--steel);
+    fill:none;
+    stroke-width:1.6;
+    transition:transform .18s ease;
+  }
+
+  .card-btn:hover{
+    border-color:var(--steel);
+    background:rgba(92,163,184,0.08);
+  }
+
+  .card-btn:hover svg{
+    transform:translateX(3px);
+  }
+
+  .card-btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:2px;
+  }
+
+  /* ---------- MODAL / DIALOG ---------- */
+
+  dialog{
+    background:var(--panel);
+    color:var(--paper);
+    border:1px solid var(--panel-line);
+    border-radius:var(--radius-card);
+    max-width:560px;
+    width:90%;
+    padding:0;
+  }
+
+  dialog::backdrop{
+    background:rgba(10,13,15,0.72);
+  }
+
+  .modal-head{
+    padding:26px 28px 18px;
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .modal-head .tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--steel);
+    display:block;
+    margin-bottom:8px;
+  }
+
+  .modal-head h3{
+    font-size:21px;
+    font-weight:600;
+    max-width:32ch;
+  }
+
+  .modal-close{
+    background:none;
+    border:1px solid var(--panel-line);
+    color:var(--muted);
+    width:30px; height:30px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .modal-close:hover{border-color:var(--steel); color:var(--paper);}
+
+  .modal-body{
+    padding:22px 28px 30px;
+    font-size:14.5px;
+    color:var(--muted);
+  }
+
+  .modal-body p{margin:0 0 14px;}
+  .modal-body ul{margin:0; padding-left:18px;}
+  .modal-body li{margin-bottom:8px;}
+  .modal-body strong{color:var(--paper);}
+
+  footer{
+    border-top:1px solid var(--panel-line);
+    padding:30px 0 40px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-tag"><span class="dot"></span> PORTAFOLIO DE TAREAS</div>
+      <h1>Automatización de procesos industriales y de servicios</h1>
+      <p>Alumna: Cundapi Solorzano Samara Valeria.
+      Profesor: Jordy Jesus Chirino Balcazar</p>
+      <div class="hero-meta">
+        <div>Tareas activas<strong>06</strong></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="catalog">
+  <div class="wrap">
+    <div class="catalog-head">
+      <h2>Catálogo de tareas</h2>
+      <span>1 Card</span>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Card 1 -->
+      <article class="card">
+        <div class="card-figure">
+          <span class="card-code">1</span>
+          <svg viewBox="0 0 100 80"><circle cx="30" cy="40" r="12"/><circle cx="30" cy="40" r="4" class="accent"/><path d="M30 20v6M30 54v6M12 40h6M42 40h6M18 28l4 4M42 48l-4-4M18 52l4-4M42 28l-4 4"/><path d="M50 40h44M76 24v32M60 40h0" /><rect x="66" y="30" width="20" height="20"/></svg>
+        </div>
+        <div class="card-body">
+          <h3>Automatización de procesos</h3>
+          <p>Industriales y de Servicios.</p>
+          <button class="card-btn" data-modal="m1">Ver
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <span>© 2026 · Valeria Cundapi</span>
+  </div>
+</footer>
+
+<!-- Dialogs -->
+<dialog id="m1">
+  <div class="modal-head">
+    <div><span class="tag">1</span><h3></div>
+    <button class="modal-close" data-close="m1">✕</button>
+  </div>
+  <div class="modal-body">
+    <p>Conceptos de la automatización.</p>
+    <ul>
+      <li><strong>Historia:</strong>Mecanismos griegos y romanos: Los inventores diseñaron clepsidras (relojes de agua) y puertas automáticas para templos.
+      El mecanismo de Anticitera: Esta máquina griega usaba engranajes complejos para predecir eventos del espacio.
+      Autómatas medievales: Ingenieros como Al-Jazari crearon bombas de agua y relojes con movimiento mecánico en el siglo XI.</li>
+      <li><strong>Introducción:</strong> Hoy en día la tecnología avanza a pasos forzados a causa de las necesidades ya sea en la calidad de los productos como por la propia competencia entre marcas. En todos los sectores es necesario tener un crecimiento tecnológico así como una mejora y optimización permanente de todos los procesos o productos que se crean. Para que la tecnología avance y con ella la sociedad, es necesario por parte de las grandes industrias hacer investigaciones e inversiones en sus plantas para tener siempre productos con tecnología punta y mayor calidad. Para cumplir todos los requisitos como mayor calidad y optimización con tecnología punta es necesario tener todos los procesos controlados y automatizados para así poder tener una mayor producción y mejor calidad.</li>
+      <li><strong>Conceptos clave:</strong> -Controlador Lógico Programable (PLC).
+      -Sensores y Actuadores.
+      -Interfaz Hombre-Máquina (HMI).
+      -Set Point (Valor de Referencia).
+      -Sistema SCADA.</li>
+      <li><strong>Ciclo de Automatización:</strong>El ciclo o fases de un proyecto de automatización abarca desde la identificación de la necesidad hasta el monitoreo y mantenimiento continuo del sistema: Identificación y análisis. Diseño y Modelado. Desarrollo e Integración. Pruebas y Puesta en marcha. Monitoreo y Optimización. </li>
+      <li><strong>Ventajas:</strong> •Reducción de mano de obra en los procesos. Al automatizar maquinara o procesos la mano de obra se ve reducida se optimizan las tareas.
+      • Aumento de la producción. Cualquier proceso automatizado incrementa la producción gracias a la simplificación de las tareas de los operarios y las mejoras que se aplican.
+      • Reducción del mantenimiento. Cualquier proceso bien automatizado y con un seguimiento preventivo correcto reducirá los problemas técnicos en el proceso y ayudará a mejorar la producción y la calidad.
+      • Garantía de calidad. La calidad de cualquier proceso automático mejorará, ya que se minimizan los posibles errores de personal. Por ejemplo un proceso de verificación de una pieza que necesite validar el error del tamaño a muy pequeña escala, un proceso automático controlado por una máquina con un ajuste idóneo siempre debería funcionar igual a diferencia de un operario.</li>
+      <li><strong>Desventajas:</strong>Hay perdidas de empleo.</li>
+      <li><strong>Industrial:</strong>Procesos de manufactura, líneas de producción, control de máquinas, robótica industrial, plantas químicas, energía, etc.</li>
+      <li><strong>Servicios:</strong>Procesos administrativos, atención al cliente, logística, edificios inteligentes, agricultura, salud, comercio (a veces llamada "autmatización de procesos de negocio" o combinada con RPA — Robotic Process Automation).</li>
+
+    </ul>
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll('.card-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-modal');
+      document.getElementById(id).showModal();
+    });
+  });
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-close');
+      document.getElementById(id).close();
+    });
+  });
+  document.querySelectorAll('dialog').forEach(dialog => {
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      if(!inside) dialog.close();
+    });
+  });
+</script>
+
+</body>
+</html>
