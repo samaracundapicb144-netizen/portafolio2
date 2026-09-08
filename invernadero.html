@@ -586,7 +586,7 @@
                </h2>
             <div class="funciones-lista">
                 <div class="funcion-item">
-                     <img src="6circuito_tinkercad.png" alt="logo" width="400" height="300">
+                     <img src="2026-09-08 115954.png" alt="logo" width="400" height="300">
                     <video width="540" height="260" controls>
                         <source src="pasos_card8/funcionamiento_card8.mp4" type="video/mp4">
                 </div>
@@ -599,12 +599,43 @@
             <div class="paso-card">
                 <div class="paso-number">1</div>
                 <div class="paso-content">
-                    <h3 class="paso-title">Historia.</h3>
-                    <p class="paso-description">
-                        Mecanismos griegos y romanos: Los inventores diseñaron clepsidras (relojes de agua) y puertas automáticas para templos.
-      			El mecanismo de Anticitera: Esta máquina griega usaba engranajes complejos para predecir eventos del espacio.
-      			Autómatas medievales: Ingenieros como Al-Jazari crearon bombas de agua y relojes con movimiento mecánico en el siglo XI.
-                    </p>
+                    <h3 class="paso-title">Codigo:</h3>
+                    <p class="paso-description"> #include <Wire.h>
+                    #include <"LiquidCrystal_I2C.h>
+                    LiquidCrystal_I2C lcd(0x27, 16, 2);
+                    const int pinSensor = A0; 
+                    const int pinMotor = 5;
+                    void setup() {
+                    lcd.init();
+                    lcd.backlight();
+                    pinMode(pinMotor, OUTPUT);
+                    digitalWrite(pinMotor, LOW);
+                    lcd.setCursor(0, 0);
+                    lcd.print(" Lectura Sensor ");
+                    lcd.setCursor(0, 1);
+                    lcd.print("   Iniciando   ");
+                    delay(2000);
+                    lcd.clear();
+                    }
+                    void loop() {
+                    int valorHumedad = analogRead(pinSensor);
+                    int porcentaje = map(valorHumedad, 1023, 0, 0, 100);
+                    porcentaje = constrain(porcentaje, 0, 100);
+                    lcd.setCursor(0, 0);
+                    lcd.print("Humedad: ");
+                    lcd.print(porcentaje);
+                    lcd.print("%   ");
+                    lcd.setCursor(0, 1);
+                    if (valorHumedad > 50) { 
+                    digitalWrite(pinMotor, HIGH);
+                    lcd.print("Motor: ON       ");
+                    } else {
+                    digitalWrite(pinMotor, LOW);
+                    lcd.print("Motor: OFF      ");
+                    }
+                  delay(1000);
+                    }   "
+                   </p>
                 </div>
               </div>
             </div>        
